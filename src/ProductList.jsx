@@ -258,11 +258,11 @@ function ProductList({ onHomeClick }) {
         setShowCart(false);
     };
 
-    const handleAddToCart = (plant) => {
-        dispatch(addItem(plant));
-        setAddedToCart((prevState) = ({
+    const handleAddToCart = (product) => {
+        dispatch(addItem(product));
+        setAddedToCart((prevState) => ({
             ...prevState,
-            [plant.name]: true,
+            [product.name]: true,
         }));
     };
     
@@ -289,8 +289,8 @@ function ProductList({ onHomeClick }) {
             {!showCart ? (
                 <div className="product-grid">
                     {plantsArray.map((category, index) => (
-                        <div key={index} className="product-category">
-                            <h2>{category.category}</h2>
+                        <div key={index}>
+                            <h1>{category.category}</h1>
                             <div className="product-list">
                                 {category.plants.map((plant, plantIndex) => (
                                     <div key={plantIndex} className="product-card">
@@ -298,7 +298,13 @@ function ProductList({ onHomeClick }) {
                                         <div className="product-title">{plant.name}</div>
                                         <div className="product-description">{plant.description}</div>
                                         <div className="cost">{plant.cost}</div>
-                                        <button className="add-to-cart-btn" onClick={() => handleAddToCart(plant)}>Add to Cart</button>
+                                        <button 
+                                            className="product-button" 
+                                            onClick={() => handleAddToCart(plant)}
+                                            disabled={addToCart[plant.name]}
+                                        >
+                                        {addToCart[plant.name] ? "Added to Cart" : "Add to cart"}
+                                        </button>
                                     </div>
                                 ))};
                             </div>

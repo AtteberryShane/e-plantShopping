@@ -15,7 +15,7 @@ export const CartSlice = createSlice({
         existingItem.quantity++;
       } else {
         // If false, add it to cart with quantity 1
-        state.items.push({ ...newItem, quantity: 1 });
+        state.items.push({ ...action.payload, quantity: 1 });
       }
     },
     removeItem: (state, action) => {

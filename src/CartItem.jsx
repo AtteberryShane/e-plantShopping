@@ -9,27 +9,44 @@ const CartItem = ({ onContinueShopping }) => {
 
   // Calculate total amount for all products in the cart
   const calculateTotalAmount = () => {
- 
+    const totalAmount = cart.reduce((total, item) => {
+       const { cost, quantity } = item; // Destructure cost and quantity from the item
+       const numericCost = parseInt(cost.replace('$', ''), 10); // Remove '$' and convert to number
+
+       return total + (numericCost * quantity); // Calculate total amount by multiplying cost with quantity
+    }, 0);
+
+    return totalAmount.toFixed(2); // Format total amount to 2 decimal places
   };
 
   const handleContinueShopping = (e) => {
-   
+    e.preventDefault(); // Prevent default behavior of the button
+    onContinueShopping(e); // Call the function passed from the parent component
   };
 
-
+  const handleCheckoutShopping = (e) => {
+    alert('Functionality to be added for future reference');
+  }
 
   const handleIncrement = (item) => {
+    dispatch(updateQuantity({ name: item.name, quantity: item.quantity + 1}));
   };
 
   const handleDecrement = (item) => {
-   
+    if (item.quantity > 1) {
+      dispatch(updateQuantity({ name: item.name, quantity: item.quantity - 1}));
+    };
   };
 
   const handleRemove = (item) => {
+    dispatch(removeItem(item.name));
   };
 
   // Calculate total cost based on quantity for an item
   const calculateTotalCost = (item) => {
+    const { cost, quantity } = item; // Destructure cost and quantity from the item
+    const numericCost = parseInt(cost.replace('$', ''), 10); // Remove '$' and convert to number
+    return (numericCost * quantity).toFixed(2); // Calculate total cost and format to 2 decimal places
   };
 
   return (
